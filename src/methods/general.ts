@@ -4,7 +4,8 @@
  * @returns img
  */
 export const getImage = (folderimg: string) => {
-  return new URL(`src/assets/${folderimg}`, window.location.origin).href;
+  return new URL(`../assets/${folderimg}`, import.meta.url).href;
+  // return new URL(`src/assets/${folderimg}`, window.location.origin).href;
 };
 
 /**
