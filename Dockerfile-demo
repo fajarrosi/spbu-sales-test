@@ -1,0 +1,18 @@
+# cek versi nodejs di file package.json
+FROM node:18.16.0 as build
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json /app/package.json
+RUN npm install --legacy-peer-deps
+COPY . /app
+COPY .env.demo /app/.env
+RUN npx quasar build
+
+# production environment
+FROM nginx:stable-alpine
+COPY --from=build /app/dist/spa /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d
+COPY ./src/assets /etc/nginx/html/src/assets
+EXPOSE 3000
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,13 @@
+.btn {
+  &:hover{
+    filter: brightness(90%);
+  }
+  &.close{
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+  &[disabled]{
+    background-color: #EAEAEA !important;
+    color: #8E8E8E !important;
+  }
+}

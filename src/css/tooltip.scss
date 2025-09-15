@@ -1,0 +1,27 @@
+.tooltip-container .tooltip-info{
+  position: absolute;
+  padding: 16px;
+  top: 32px;
+  background: #202020;
+  z-index: 99;
+  border-radius: 16px;
+  color: white;
+  left: -15px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .3s;
+  &::before{
+    border-width: 9px;
+    border-style: solid;
+    border-color:  transparent transparent #202020 transparent;
+    content: "";
+    position: absolute;
+    left: 6%;
+    bottom: 100%;
+  }
+}
+
+.tooltip-container:hover .tooltip-info{
+  visibility: visible;
+  opacity: 1;
+}

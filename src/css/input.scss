@@ -1,0 +1,68 @@
+.q-field--outlined.search-input .q-field__control {
+  border-radius: 8px;
+  padding: 0px 16px;
+}
+.q-field--outlined.price-input .q-field__control {
+  background: white;
+}
+.q-field--outlined.search-input.showing {
+  .q-field__control {
+    padding: 2px 8px;
+    height: 28px;
+    .q-field__control-container {
+      width: 22px !important;
+    }
+    .q-field__append {
+      padding: 0;
+      height: 28px;
+      margin-left: -20px;
+    }
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+}
+.q-field--outlined.search-input .q-field__control:before {
+  border: 1px solid #c9c9c9;
+}
+
+.search-input[aria-disabled='true'] {
+  .q-field__control {
+    background-color: #eaeaea !important;
+    color: #8e8e8e !important;
+  }
+}
+
+.sales-input input {
+  text-align: center;
+  width: 100%;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input.input-qty::-webkit-outer-spin-button,
+input.input-qty::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input.input-qty[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.input-qty:focus {
+  border: 0;
+  outline: none;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}

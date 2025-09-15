@@ -1,0 +1,12 @@
+.q-checkbox{
+  .q-checkbox__bg{
+    border-radius: 4px;
+    color:#C9C9C9;
+  }
+  &[aria-checked=true] .q-checkbox__bg {
+    color:#ED4C4D;
+  }
+  &[aria-checked=mixed] .q-checkbox__bg {
+    color:#ED4C4D;
+  }
+}

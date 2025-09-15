@@ -1,0 +1,53 @@
+// app global css in SCSS form
+@import './navbar.scss';
+@import './sidebar.scss';
+@import './typography.scss';
+@import './table.scss';
+@import './input.scss';
+@import './bulkaction.scss';
+@import './button.scss';
+@import './checkbox.scss';
+@import './tooltip.scss';
+@import './toggle.scss';
+@import './cruddialog.scss';
+@import './menu.scss';
+@import './scrollbar.scss';
+
+.bg-dashboard{
+  background-color: #F6F6F7;
+}
+
+.neutral-70-svg {
+  filter: invert(44%) sepia(0%) saturate(1300%) hue-rotate(268deg) brightness(98%) contrast(85%);
+}
+
+.neutral-80-svg {
+  filter: invert(28%) sepia(12%) saturate(8%) hue-rotate(2deg) brightness(96%) contrast(76%);
+}
+
+.neutral-90-svg {
+  filter: invert(17%) sepia(0%) saturate(0%) hue-rotate(156deg) brightness(100%) contrast(90%);
+}
+
+.primary-red-80-svg{
+  filter: invert(37%) sepia(21%) saturate(6964%) hue-rotate(333deg) brightness(96%) contrast(93%);
+}
+
+.white-svg {
+  filter: invert(100%);
+}
+
+.semantic-blue-80-svg {
+  filter: invert(34%) sepia(84%) saturate(3263%)
+    hue-rotate(212deg) brightness(99%) contrast(91%);
+}
+.semantic-green-80-svg {
+  filter: invert(47%) sepia(65%) saturate(494%) hue-rotate(93deg) brightness(103%) contrast(89%);
+}
+
+.page-break {
+  page-break-before: always;
+}
+.page-after {
+  page-break-after: always;
+}

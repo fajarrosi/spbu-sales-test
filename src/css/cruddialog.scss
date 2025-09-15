@@ -1,0 +1,7 @@
+ .q-dialog__inner > .crud-dialog {
+  border-radius: 16px;
+}
+
+.reset-width .q-dialog__inner--minimized > div{
+  max-width: none;
+}
