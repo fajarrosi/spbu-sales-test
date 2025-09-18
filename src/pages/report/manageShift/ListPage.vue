@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import productHandler from 'api/master/product';
-import { date } from 'quasar';
+import shiftHandler from 'api/report/manageShift';
 import { formatRibuan } from 'methods/general';
 import { useTable } from 'stores/useTable';
 import { storeToRefs } from 'pinia';
@@ -18,50 +17,49 @@ const { onSortTable, setColumn, setTitleNoData, setHandler, openDialog, onInitDa
 
 // const employeeSelected = ref([]);
 setColumn([
-  { name: 'employee_info', align: 'left', label: 'Product Info', field: 'id' },
-  { name: 'address', align: 'left', label: 'Harga Per Liter', field: 'id' },
+  { name: 'employee_info', align: 'left', label: 'Shift Info', field: 'id' },
   { name: 'action', align: 'left', label: 'Action', field: 'id' },
 ]);
 
-setTitleNoData('Product');
+setTitleNoData('Shift');
 
-setHandler(productHandler);
+setHandler(shiftHandler);
 
 const showDialogUpload = ref(false);
 
 onMounted(() => {
-  onInitData(productHandler.list('?page=1&limit=10'));
+  onInitData(shiftHandler.list('?page=1&limit=10'));
 });
 
 const onClick = ({ row, method = '' }: { row?: any; method: string }) => {
   switch (method) {
     case 'edit':
-      router.push({ name: 'Manage Product', query: { id: row?.pro_id } });
+      router.push({ name: 'Store Shift', query: { id: row?.shift_id } });
       break;
     case 'add':
-      router.push({ name: 'Manage Product' });
+      router.push({ name: 'Store Shift' });
       break;
     case 'detail':
-      router.push({ name: 'Detail Product', params: { id: row?.pro_id } });
+      router.push({ name: 'Detail Shift', params: { id: row?.shift_id } });
       break;
     default: //delete
       openDialog('delete');
       editForm.value = {
-        pro_name: row?.pro_name,
-        pro_id: row?.pro_id,
+        shift_name: row?.shift_name,
+        shift_id: row?.shift_id,
       };
       break;
   }
 };
 const resetForm = () => {
-  onInitData(productHandler.list('?page=1&limit=10'));
+  onInitData(shiftHandler.list('?page=1&limit=10'));
   editForm.value = {
-    pro_name: '',
-    pro_id: '',
+    shift_name: '',
+    shift_id: '',
   };
 };
 const onSubmit = () => {
-  onSubmitDialog(editForm.value.pro_id, editForm.value, resetForm);
+  onSubmitDialog(editForm.value.shift_id, editForm.value, resetForm);
 };
 
 const handleShowDialogUpload = () => {
@@ -73,9 +71,9 @@ const handleShowDialogUpload = () => {
   <q-page class="py-6 ml-6 mr-8">
     <app-container-card>
       <header-table
-        title="Master Product"
-        :chips="`${totalRecord} Product`"
-        labelAdd="Add Product"
+        title="Manage Shift"
+        :chips="`${totalRecord} Shift`"
+        labelAdd="Add Shift"
         :can="['add', 'search']"
         @on-add="
           onClick({
@@ -93,7 +91,7 @@ const handleShowDialogUpload = () => {
             :pagination="{ rowsPerPage: 0 }"
             :loading="loading"
             :no-data-label="noData.title"
-            :row-key="(row:any) => row.emp_id"
+            :row-key="(row:any) => row.shift_id"
             :class="rows.length > 0 ? '' : 'pb-4'"
           >
             <template v-slot:body-selection="props">
@@ -104,22 +102,13 @@ const handleShowDialogUpload = () => {
                 <div class="flex gap-x-4">
                   <div class="flex flex-col">
                     <div class="font-medium text-neutral-90">
-                      {{ props.row.pro_name }}
+                      {{ props.row.shift_name }}
                     </div>
-                    <div class="text-neutral-70">ID : {{ props.row.pro_id }}</div>
+                    <div class="text-neutral-70">ID : {{ props.row.shift_id }}</div>
                   </div>
                 </div>
               </q-td>
             </template>
-
-            <template v-slot:body-cell-address="props">
-              <q-td key="address" :props="props">
-                <div class="text-neutral-90 max-w-[20vw] text-wrap break-words">
-                  {{ formatRibuan(props.row.pro_price) }}
-                </div>
-              </q-td>
-            </template>
-
             <template v-slot:body-cell-action="props">
               <q-td key="action" :props="props">
                 <action-table
@@ -136,19 +125,13 @@ const handleShowDialogUpload = () => {
                 <app-sort-table :label="props.col.label" column-sort="employee_info" @onSort="onSortTable" />
               </q-th>
             </template>
-
-            <template v-slot:header-cell-address="props">
-              <q-th key="address" :props="props">
-                <app-sort-table :label="props.col.label" column-sort="name" @onSort="onSortTable" />
-              </q-th>
-            </template>
           </app-table>
 
           <pagination-table />
         </div>
       </div>
 
-      <app-no-data title="No Data" subtitle="Click “+ Add New” to add new Product" v-else-if="state == 'no-data'" />
+      <app-no-data title="No Data" subtitle="Click “+ Add New” to add new Shift" v-else-if="state == 'no-data'" />
     </app-container-card>
 
     <app-dialog
@@ -161,7 +144,7 @@ const handleShowDialogUpload = () => {
     >
       <q-card-section class="content-crud p-6 w-[470px]">
         <div class="text-neutral-90 tx-body-2">
-          Are you sure want to delete data Product “<span class="font-semibold">{{ editForm.pro_name }}</span
+          Are you sure want to delete data Shift “<span class="font-semibold">{{ editForm.shift_name }}</span
           >”?
         </div>
       </q-card-section>

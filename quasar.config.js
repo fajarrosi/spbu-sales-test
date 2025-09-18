@@ -52,12 +52,9 @@ module.exports = configure(function (/* ctx */) {
       alias: {
         methods: path.join(__dirname, './src/methods'),
         master: path.join(__dirname, './src/master'),
-        parametersetup: path.join(__dirname, './src/parametersetup'),
-        journeyplan: path.join(__dirname, './src/journeyplan'),
+        report: path.join(__dirname, './src/report'),
         api: path.join(__dirname, './src/api'),
         interface: path.join(__dirname, './src/interface'),
-        accountreceivable: path.join(__dirname, './src/accountreceivable'),
-        inventory: path.join(__dirname, './src/inventory'),
       },
       target: {
         browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],

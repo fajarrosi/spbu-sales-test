@@ -13,13 +13,10 @@
       "assets/*": ["src/assets/*"],
       "stores/*": ["src/stores/*"],
       "methods/*": ["src/methods/*"],
-      "parametersetup/*": ["src/parametersetup/*"],
-      "journeyplan/*": ["src/journeyplan/*"],
       "master/*": ["src/master/*"],
       "api/*": ["src/api/*"],
       "interface/*": ["src/interface/*"],
-      "accountreceivable/*": ["src/accountreceivable/*"],
-      "inventory/*": ["src/inventory/*"]
+      "report/*": ["src/report/*"]
     }
   }
 }
