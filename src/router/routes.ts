@@ -2,13 +2,14 @@ import { RouteRecordRaw } from 'vue-router';
 import { routes as home } from 'src/home/routes';
 import { routes as master } from 'src/master';
 import { routes as report } from 'src/report';
+import { routes as inventory } from 'src/inventory';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     redirect: { name: 'Home' },
-    children: [...home, ...master, ...report],
+    children: [...home, ...master, ...report, ...inventory],
     meta: {
       requiresAuth: true,
     },

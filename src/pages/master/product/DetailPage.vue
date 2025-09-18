@@ -54,8 +54,18 @@ const goBack = () => {
               <div class="tx-body-3">{{ detailData?.pro_id }}</div>
             </div>
             <div class="flex flex-col gap-y-1 grow">
-              <div class="tx-caption-1 text-neutral-70">Harga Per Liter</div>
+              <div class="tx-caption-1 text-neutral-70">Harga Jual Per Liter</div>
               <div class="tx-body-3">Rp {{ formatRibuan(detailData?.pro_price ?? 0) }}</div>
+            </div>
+            <div class="flex flex-col gap-y-1 grow">
+              <div class="tx-caption-1 text-neutral-70">Harga Beli Per Liter</div>
+              <div class="tx-body-3">Rp {{ formatRibuan(detailData?.pro_buyprice ?? 0) }}</div>
+            </div>
+            <div class="flex flex-col gap-y-1 grow">
+              <div class="tx-caption-1 text-neutral-70">Keuntungan Per Liter</div>
+              <div class="tx-body-3">
+                Rp {{ formatRibuan((detailData?.pro_price ?? 0) - (detailData?.pro_buyprice ?? 0)) }}
+              </div>
             </div>
           </div>
         </div>

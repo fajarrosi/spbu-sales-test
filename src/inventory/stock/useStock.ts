@@ -1,30 +1,30 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-export interface productModel {
+export interface stockModel {
+  stock_id: number;
   pro_id: number;
   pro_name: string;
-  pro_price: number;
-  pro_buyprice: number;
+  stock: number;
   updated_at: string;
 }
 
-export const useProduct = defineStore('productStore', () => {
+export const useStock = defineStore('stockStore', () => {
   const now = new Date();
   const updated_at = new Date(
     now.getTime() - Math.floor(Math.random() * 1000000000) // random old date
   ).toISOString();
-  const productData = ref<productModel[]>([
+  const stockData = ref<stockModel[]>([
     {
+      stock_id: 1,
       pro_id: 1,
       pro_name: 'Pertalite',
-      pro_price: 10000,
-      pro_buyprice: 9000,
+      stock: 10000,
       updated_at,
     },
   ]);
 
   return {
-    productData,
+    stockData,
   };
 });

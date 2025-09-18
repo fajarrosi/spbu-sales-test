@@ -53,6 +53,7 @@ module.exports = configure(function (/* ctx */) {
         methods: path.join(__dirname, './src/methods'),
         master: path.join(__dirname, './src/master'),
         report: path.join(__dirname, './src/report'),
+        inventory: path.join(__dirname, './src/inventory'),
         api: path.join(__dirname, './src/api'),
         interface: path.join(__dirname, './src/interface'),
       },

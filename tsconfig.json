@@ -16,7 +16,8 @@
       "master/*": ["src/master/*"],
       "api/*": ["src/api/*"],
       "interface/*": ["src/interface/*"],
-      "report/*": ["src/report/*"]
+      "report/*": ["src/report/*"],
+      "inventory/*": ["src/inventory/*"]
     }
   }
 }

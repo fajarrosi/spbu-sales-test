@@ -1,20 +1,18 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import productHandler from 'api/master/product';
+import shiftHandler from 'api/report/manageShift';
 import { useGeneralFetch } from 'methods/useGeneralFetch';
-import type { productModel } from 'master/product/useProduct';
+import type { shiftModel } from 'report/manageShift/useManageShift';
 
 const router = useRouter();
 const route = useRoute();
 
 const loading = ref(false);
 
-const form = ref<productModel>({
-  pro_id: 0,
-  pro_name: '',
-  pro_price: 0,
-  pro_buyprice: 0,
+const form = ref<shiftModel>({
+  shift_id: 0,
+  shift_name: '',
   updated_at: new Date().toISOString(),
 });
 
@@ -23,11 +21,11 @@ const formImage = ref();
 const inputForm = ref();
 
 const titlePage = computed(() => {
-  return route.query.id ? 'Edit Product' : 'Add Product';
+  return route.query.id ? 'Edit Shift' : 'Add Shift';
 });
 
 const onCancel = () => {
-  router.push({ name: 'Product' });
+  router.push({ name: 'Manage Shift' });
 };
 
 const onSubmitted = async (action?: string) => {
@@ -36,27 +34,27 @@ const onSubmitted = async (action?: string) => {
 
     if (route.query.id) {
       // if (formImage.value && typeof formImage.value !== 'string') {
-      //   const response = await productHandler.upload(formImage.value, null);
+      //   const response = await shiftHandler.upload(formImage.value, null);
       //   requestData.image_url = response.data.data.url;
       // }
       await useGeneralFetch(
-        productHandler.update(parseInt(route.query.id as string), form.value),
+        shiftHandler.update(parseInt(route.query.id as string), form.value),
         () => {
-          router.push('/master-product');
+          router.push({ name: 'Manage Shift' });
         },
-        `Success Update Data Product ${form.value.pro_name} `
+        `Success Update Data Shift ${form.value.shift_name} `
       );
     } else {
       // if (formImage.value && typeof formImage.value !== 'string') {
-      //   const response = await productHandler.upload(formImage.value, null);
+      //   const response = await shiftHandler.upload(formImage.value, null);
       //   requestData.image_url = response.data.data.url;
       // }
       await useGeneralFetch(
-        productHandler.create(form.value),
+        shiftHandler.create(form.value),
         () => {
-          router.push({ name: 'Product' });
+          router.push({ name: 'Manage Shift' });
         },
-        'Success Create Data Product'
+        'Success Create Data Shift'
       );
     }
   }
@@ -69,13 +67,11 @@ onMounted(async () => {
     return;
   }
   try {
-    const response: any = await productHandler.detail(route.query.id as string);
+    const response: any = await shiftHandler.detail(route.query.id as string);
     const data = response.data;
     form.value = {
-      pro_name: data.pro_name,
-      pro_id: data.pro_id,
-      pro_price: data.pro_price,
-      pro_buyprice: data.pro_buyprice,
+      shift_name: data.shift_name,
+      shift_id: data.shift_id,
       updated_at: new Date().toISOString(),
     };
   } catch (error) {
@@ -84,10 +80,6 @@ onMounted(async () => {
     loading.value = false;
   }
 });
-
-const rules = {
-  phoneNumber: (val: any) => /^[0-9]+$/.test(val) || 'Harga harus berupa angka',
-};
 </script>
 
 <template>
@@ -121,51 +113,18 @@ const rules = {
           <q-form ref="inputForm" class="px-[80px] py-8" v-else>
             <div class="space-y-7">
               <div class="grid grid-cols-6 gap-4">
-                <div class="flex flex-col gap-y-1 grow col-span-2">
-                  <div class="tx-caption-1 font-medium text-neutral-90">Product Name</div>
+                <div class="flex flex-col gap-y-1 grow col-span-4">
+                  <div class="tx-caption-1 font-medium text-neutral-90">Shift Name</div>
                   <q-input
-                    v-model="form.pro_name"
+                    v-model="form.shift_name"
                     type="text"
                     outlined
                     dense
                     class="search-input"
-                    placeholder="Input Product Name"
+                    placeholder="Input Shift Name"
                     :rules="[
-                      (val: any) => (val && val.length > 0) || 'Product Name Tidak Boleh Kosong',
-                      (val: any) => (val && val.length <= 100) || 'Product Name Maksimal 100 Karakter',
-                    ]"
-                  />
-                </div>
-
-                <div class="flex flex-col gap-y-1 grow col-span-2">
-                  <div class="tx-caption-1 font-medium text-neutral-90">Harga Jual Per Liter</div>
-                  <q-input
-                    v-model="form.pro_price"
-                    type="text"
-                    outlined
-                    dense
-                    class="search-input"
-                    placeholder="ex : 50000"
-                    :rules="[
-                      (val: any) => (val && val === 0 || val.length > 0) || 'Harga Per Liter Tidak Boleh Kosong',
-                      rules.phoneNumber,
-                      (val: any) => (val && val.length <= 15) || 'Harga Per Liter Maksimal 15 Karakter',
-                    ]"
-                  />
-                </div>
-                <div class="flex flex-col gap-y-1 grow col-span-2">
-                  <div class="tx-caption-1 font-medium text-neutral-90">Harga Beli Per Liter</div>
-                  <q-input
-                    v-model="form.pro_buyprice"
-                    type="text"
-                    outlined
-                    dense
-                    class="search-input"
-                    placeholder="ex : 50000"
-                    :rules="[
-                      (val: any) => (val && val === 0 || val.length > 0) || 'Harga Beli Per Liter Tidak Boleh Kosong',
-                      rules.phoneNumber,
-                      (val: any) => (val && val.length <= 15) || 'Harga Beli Per Liter Maksimal 15 Karakter',
+                      (val: any) => (val && val.length > 0) || 'Shift Name Tidak Boleh Kosong',
+                      (val: any) => (val && val.length <= 100) || 'Shift Name Maksimal 100 Karakter',
                     ]"
                   />
                 </div>

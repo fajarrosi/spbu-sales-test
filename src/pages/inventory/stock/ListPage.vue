@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import productHandler from 'api/master/product';
-import { date } from 'quasar';
+import stockHandler from 'api/inventory/stock';
 import { formatRibuan } from 'methods/general';
 import { useTable } from 'stores/useTable';
 import { storeToRefs } from 'pinia';
@@ -18,52 +17,50 @@ const { onSortTable, setColumn, setTitleNoData, setHandler, openDialog, onInitDa
 
 // const employeeSelected = ref([]);
 setColumn([
-  { name: 'employee_info', align: 'left', label: 'Product Info', field: 'id' },
-  { name: 'address', align: 'left', label: 'Harga Jual Per Liter', field: 'id' },
-  { name: 'beli', align: 'left', label: 'Harga Beli Per Liter', field: 'id' },
-  { name: 'keuntungan', align: 'left', label: 'Keuntungan Per Liter', field: 'id' },
+  { name: 'employee_info', align: 'left', label: 'Stock Info', field: 'id' },
+  { name: 'stock', align: 'left', label: 'Stock Total', field: 'id' },
   { name: 'action', align: 'left', label: 'Action', field: 'id' },
 ]);
 
-setTitleNoData('Product');
+setTitleNoData('Stock');
 
-setHandler(productHandler);
+setHandler(stockHandler);
 
 const showDialogUpload = ref(false);
 
 onMounted(() => {
-  onInitData(productHandler.list('?page=1&limit=10'));
+  onInitData(stockHandler.list('?page=1&limit=10'));
 });
 
 const onClick = ({ row, method = '' }: { row?: any; method: string }) => {
   switch (method) {
     case 'edit':
-      router.push({ name: 'Manage Product', query: { id: row?.pro_id } });
+      router.push({ name: 'Store Stock', query: { id: row?.stock_id } });
       break;
     case 'add':
-      router.push({ name: 'Manage Product' });
+      router.push({ name: 'Store Stock' });
       break;
     case 'detail':
-      router.push({ name: 'Detail Product', params: { id: row?.pro_id } });
+      router.push({ name: 'Detail Stock', params: { id: row?.stock_id } });
       break;
     default: //delete
       openDialog('delete');
       editForm.value = {
         pro_name: row?.pro_name,
-        pro_id: row?.pro_id,
+        stock_id: row?.stock_id,
       };
       break;
   }
 };
 const resetForm = () => {
-  onInitData(productHandler.list('?page=1&limit=10'));
+  onInitData(stockHandler.list('?page=1&limit=10'));
   editForm.value = {
     pro_name: '',
-    pro_id: '',
+    stock_id: '',
   };
 };
 const onSubmit = () => {
-  onSubmitDialog(editForm.value.pro_id, editForm.value, resetForm);
+  onSubmitDialog(editForm.value.stock_id, editForm.value, resetForm);
 };
 
 const handleShowDialogUpload = () => {
@@ -75,9 +72,9 @@ const handleShowDialogUpload = () => {
   <q-page class="py-6 ml-6 mr-8">
     <app-container-card>
       <header-table
-        title="Master Product"
-        :chips="`${totalRecord} Product`"
-        labelAdd="Add Product"
+        title="Manage Stock"
+        :chips="`${totalRecord} Stock`"
+        labelAdd="Add Stock"
         :can="['add', 'search']"
         @on-add="
           onClick({
@@ -95,7 +92,7 @@ const handleShowDialogUpload = () => {
             :pagination="{ rowsPerPage: 0 }"
             :loading="loading"
             :no-data-label="noData.title"
-            :row-key="(row:any) => row.emp_id"
+            :row-key="(row:any) => row.stock_id"
             :class="rows.length > 0 ? '' : 'pb-4'"
           >
             <template v-slot:body-selection="props">
@@ -113,29 +110,13 @@ const handleShowDialogUpload = () => {
                 </div>
               </q-td>
             </template>
-
-            <template v-slot:body-cell-address="props">
-              <q-td key="address" :props="props">
+            <template v-slot:body-cell-stock="props">
+              <q-td key="stock" :props="props">
                 <div class="text-neutral-90 max-w-[20vw] text-wrap break-words">
-                  {{ formatRibuan(props.row.pro_price) }}
+                  {{ formatRibuan(props.row.stock) }}
                 </div>
               </q-td>
             </template>
-            <template v-slot:body-cell-beli="props">
-              <q-td key="beli" :props="props">
-                <div class="text-neutral-90 max-w-[20vw] text-wrap break-words">
-                  {{ formatRibuan(props.row.pro_buyprice) }}
-                </div>
-              </q-td>
-            </template>
-            <template v-slot:body-cell-keuntungan="props">
-              <q-td key="keuntungan" :props="props">
-                <div class="text-neutral-90 max-w-[20vw] text-wrap break-words">
-                  {{ formatRibuan(props.row.pro_price - props.row.pro_buyprice) }}
-                </div>
-              </q-td>
-            </template>
-
             <template v-slot:body-cell-action="props">
               <q-td key="action" :props="props">
                 <action-table
@@ -152,19 +133,13 @@ const handleShowDialogUpload = () => {
                 <app-sort-table :label="props.col.label" column-sort="employee_info" @onSort="onSortTable" />
               </q-th>
             </template>
-
-            <template v-slot:header-cell-address="props">
-              <q-th key="address" :props="props">
-                <app-sort-table :label="props.col.label" column-sort="name" @onSort="onSortTable" />
-              </q-th>
-            </template>
           </app-table>
 
           <pagination-table />
         </div>
       </div>
 
-      <app-no-data title="No Data" subtitle="Click “+ Add New” to add new Product" v-else-if="state == 'no-data'" />
+      <app-no-data title="No Data" subtitle="Click “+ Add New” to add new Stock" v-else-if="state == 'no-data'" />
     </app-container-card>
 
     <app-dialog
@@ -177,7 +152,7 @@ const handleShowDialogUpload = () => {
     >
       <q-card-section class="content-crud p-6 w-[470px]">
         <div class="text-neutral-90 tx-body-2">
-          Are you sure want to delete data Product “<span class="font-semibold">{{ editForm.pro_name }}</span
+          Are you sure want to delete data Stock “<span class="font-semibold">{{ editForm.pro_name }}</span
           >”?
         </div>
       </q-card-section>
